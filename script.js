@@ -1,20 +1,18 @@
-// Fetch the characters from the Thrones API and display them in the table
+// Fetch characters and populate the table
 (async () => {
     try {
         const response = await fetch("https://thronesapi.com/api/v2/characters");
-        const data = await response.json(); // Parse the response as JSON
-
-        console.log(data); // Log the data to check the structure
+        const data = await response.json(); // Parse JSON response
 
         const tableBody = document.getElementById("table-body");
 
-        // Loop through the data and insert rows into the table
+        // Loop through characters and insert them into the table
         data.forEach(character => {
             tableBody.innerHTML += `
-                <tr onclick="rowClick(${character.id})">
+                <tr onclick="showCharacterDetail(${character.id})" style="cursor: pointer;">
                     <td>${character.id}</td>
                     <td>${character.fullName}</td>
-                    <td>${character.title}</td>
+                    <td><img src="${character.imageUrl}" width="50" class="rounded"></td>
                 </tr>
             `;
         });
@@ -23,22 +21,23 @@
     }
 })();
 
-// Function to handle row click
-function rowClick(id) {
-    alert("Row clicked for character with ID: " + id);
-}
+// Function to show character details in modal
+function showCharacterDetail(id) {
+    fetch("https://thronesapi.com/api/v2/characters")
+        .then(response => response.json())
+        .then(data => {
+            const character = data.find(char => char.id === id);
+            if (character) {
+                document.getElementById("characterImage").src = character.imageUrl;
+                document.getElementById("characterName").textContent = character.fullName;
+                document.getElementById("characterTitle").textContent = character.title;
+                document.getElementById("characterFamily").textContent = character.family;
+                document.getElementById("characterImageUrl").href = character.imageUrl;
 
-// Placeholder function for searching characters (you can extend it)
-function searchCharacter() {
-    const searchTerm = document.getElementById("search").value.toLowerCase();
-    const rows = document.querySelectorAll("#table-body tr");
-
-    rows.forEach(row => {
-        const name = row.cells[1].textContent.toLowerCase();
-        if (name.includes(searchTerm)) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
-        }
-    });
+                // Show the Bootstrap modal
+                let characterModal = new bootstrap.Modal(document.getElementById("characterModal"));
+                characterModal.show();
+            }
+        })
+        .catch(error => console.error("Error fetching character details:", error));
 }

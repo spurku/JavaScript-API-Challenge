@@ -5,40 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game of Thrones Character List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet"> <!-- If you have custom styles -->
 </head>
-<body>
-    
-<div class="container">
-    <h1>Game of Thrones</h1>
-    <h2>Character List</h2>
-    
-    <div class="row">
-        <div class="col-md-6">
-            <input type="text" id="search" class="form-control" placeholder="Search for a character">
-        </div>
-        
-        <div class="col-md-6">
-            <button class="btn btn-primary" onclick="searchCharacter()">Search</button>
-        </div>
-    </div>
+<body class="bg-light">
 
-    <table class="table table-success table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Title</th>
-            </tr>
-        </thead>
-        <tbody id="table-body">
-            <!-- Data rows will be inserted here dynamically -->
-        </tbody>
-    </table>
+<div class="container mt-4">
+    <h1 class="text-center">Game of Thrones Characters</h1>
+
+    <!-- Character Table -->
+    <div class="card p-3">
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Character data will be inserted dynamically -->
+            </tbody>
+        </table>
+    </div>
 </div>
 
+<!-- Character Detail Modal -->
+<div class="modal fade" id="characterModal" tabindex="-1" aria-labelledby="characterModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="characterModalLabel">Character Detail</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="characterImage" src="" class="img-fluid rounded mb-3" alt="Character Image">
+        <h3 id="characterName"></h3>
+        <p><strong>Title:</strong> <span id="characterTitle"></span></p>
+        <p><strong>Family:</strong> <span id="characterFamily"></span></p>
+        <p><strong>Image URL:</strong> <a id="characterImageUrl" href="#" target="_blank">View Image</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Script -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Link to the external script.js -->
+<!-- External JavaScript -->
 <script src="script.js"></script>
 
 </body>
